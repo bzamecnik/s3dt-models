@@ -69,7 +69,7 @@ module reel() {
 
 module logo(height) {
     linear_extrude(height = height, center = true) {
-        translate([-33,-20,0])
+        translate([-32.5,-22,0])
         scale(0.15)
         import(logo_file);
     }
