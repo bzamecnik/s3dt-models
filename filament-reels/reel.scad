@@ -4,8 +4,8 @@ font = "Liberation Sans";
 // reel:
 outer_diameter = 200;
 hole_diameter = 55;
-reel_diameter = 170;
-width = 55;
+reel_diameter = 190;
+width = 20;
 outer_reel_width = 5;
 rim_height = 2;
 rib_margin = 10;
@@ -15,6 +15,17 @@ text_size = 20;
 module inner_reel() {
     translate([0, 0, -width/2])
     linear_extrude(height=width-rim_height*2) {
+        circle(d=reel_diameter, $fn=200);
+    }
+    
+    translate([0, 0, 1.1])
+    linear_extrude(height=4, scale=1.05) {
+        circle(d=reel_diameter, $fn=200);
+    }
+    
+    translate([0, 0, -6.1])
+    rotate([180,0,0])
+    linear_extrude(height=4, scale=1.05) {
         circle(d=reel_diameter, $fn=200);
     }
 }
