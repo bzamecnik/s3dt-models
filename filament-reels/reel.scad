@@ -17,15 +17,22 @@ module inner_reel() {
     }
 }
 
+module plain_outer_reel() {
+    linear_extrude(height=outer_reel_width) {
+        circle(d=outer_diameter, $fn=400);
+    }
+}
+
 module outer_reel() {
-    difference() {
-        linear_extrude(height=outer_reel_width) {
-            circle(d=outer_diameter, $fn=400);
-        }
-        color("gray")
-        translate([0, 0, outer_reel_width-2])
-        linear_extrude(height=2+1) {
-            circle(d=outer_diameter - 5, $fn=400);
+    union() {
+        ribs();
+        difference() {
+            plain_outer_reel();
+            color("gray")
+            translate([0, 0, outer_reel_width-2])
+            linear_extrude(height=2+1) {
+                circle(d=outer_diameter - 5, $fn=400);
+            }
         }
     }
 }
@@ -52,16 +59,12 @@ module ribs() {
 module reel() {
     inner_reel();
     translate([0, 0, width / 2 - outer_reel_width])
-    union() {
-        ribs();
-        outer_reel();
-    }
+    // upper reel
+    outer_reel();
+    // lower reel
     translate([0, 0, -width / 2])
     rotate([180,0,0])
-    union() {
-        ribs();
-        outer_reel();
-    }
+    plain_outer_reel();
 }
 
 module logo(height) {
