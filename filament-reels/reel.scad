@@ -9,6 +9,8 @@ width = 55;
 outer_reel_width = 5;
 rim_height = 2;
 rib_margin = 10;
+inscription_depth = 1.5 * rim_height;
+text_size = 20;
 
 module inner_reel() {
     translate([0, 0, -width/2])
@@ -76,16 +78,25 @@ module logo(height) {
 }
 
 module logo_inscription() {
-    height = 1.5*rim_height;
-    translate([0,-0.7*outer_diameter/2,width/2-height])
-    logo(height+0.1);
+    translate([0,-0.7*outer_diameter/2,width/2 - inscription_depth])
+    logo(1.1 * inscription_depth); // + eps
+}
+
+module description() {
+    translate([0, 0.6*outer_diameter/2, width/2 - inscription_depth])
+    linear_extrude(height=1.1 * inscription_depth, center=true) {
+        text("ABS", text_size, halign="center", font=font);
+    }
 }
 
 scale(8/20)
 difference() {
     difference() {
         reel();
-        logo_inscription();
+        union() {
+            logo_inscription();
+            description();
+        }
     }
     hole();
 }
