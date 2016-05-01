@@ -1,5 +1,5 @@
 logo_file = "s3dt-logo.dxf";
-font = "Liberation Sans";
+font = "Liberation Sans:style=Bold";
 
 // reel:
 outer_diameter = 200;
