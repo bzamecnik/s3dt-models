@@ -93,10 +93,19 @@ module logo_inscription() {
     logo(1.1 * inscription_depth); // + eps
 }
 
+module multiline_text(lines, size){ //https://www.reddit.com/r/openscad/comments/3jwobs/line_feed_in_openscad_text/
+    union(){
+        for (i = [0 : len(lines)-1]) {
+            translate([0 , -i * (size + 2), 0])
+            text(lines[i], size, halign="center", font=font);
+        }
+    }
+}
+
 module description(desc, size, y_pos) {
     translate([0, y_pos * outer_diameter/2, width/2 - inscription_depth])
     linear_extrude(height=1.1 * inscription_depth, center=true) {
-        text(desc, size, halign="center", font=font);
+        multiline_text(desc, size);
     }
 }
 
@@ -114,4 +123,4 @@ module reel(desc, desc_size, desc_y_pos) {
     }
 }
 
-reel("ABS", 20, 0.6);
+reel(["ABS"], 20, 0.6);
